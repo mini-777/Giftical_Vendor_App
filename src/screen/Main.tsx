@@ -17,25 +17,7 @@ export default function Main({ navigation }) {
       <Box ml={5} mb={2}>
         <Heading size='2xl'>GIFTICAL</Heading>
       </Box>
-      <Box alignSelf='center'>
-        <Input
-          h={10}
-          placeholder='검색어를 입력해주세요'
-          variant='filled'
-          width='90%'
-          borderRadius='10'
-          py='1'
-          px='2'
-          InputLeftElement={
-            <Icon
-              ml='2'
-              size='4'
-              color='gray.400'
-              as={<Ionicons name='ios-search' />}
-            />
-          }
-        />
-      </Box>
+
       <Box alignItems='center'>
         <Center margin={4}>
           <Pressable onPress={() => navigation.navigate('Scan')}>
