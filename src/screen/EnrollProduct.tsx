@@ -21,13 +21,14 @@ export default function EnrollProduct({ navigation }) {
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
       allowsEditing: false,
       quality: 1,
-      aspect: [1, 1]
+      aspect: [1, 1],
+      base64: true
     });
     if (result.canceled) {
       return null;
     }
 
-    console.log(result.assets)
+    // console.log(result.assets)
     setImageUrl(result.assets[0].uri);
   }
 
