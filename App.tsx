@@ -8,6 +8,7 @@ import Scan from './src/screen/Scan';
 import Login from './src/screen/Login';
 import Receipt from './src/screen/Receipt';
 import StockOrder from './src/screen/StockOrder';
+import Signup from './src/screen/Signup';
 import React from 'react';
 
 const MainTheme = {
@@ -31,6 +32,11 @@ export default function App() {
             options={{ headerShown: false }}
           />
 
+          <Stack.Screen
+            name='Signup'
+            component={Signup}
+            options={{ headerShown: false }}
+          />
           <Stack.Screen
             name='Main'
             component={Main}
