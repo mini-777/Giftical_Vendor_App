@@ -97,8 +97,7 @@ export default function Login({ navigation }) {
               mt='2'
               colorScheme='indigo'
               onPress={() => {
-                logIn();
-                // navigation.dispatch(StackActions.replace('Main', {}));
+                navigation.dispatch(StackActions.replace('SelectStore', {}));
               }}
               //onPress={logIn}
             >

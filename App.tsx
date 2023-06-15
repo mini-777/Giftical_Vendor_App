@@ -9,6 +9,7 @@ import Login from './src/screen/Login';
 import Receipt from './src/screen/Receipt';
 import StockOrder from './src/screen/StockOrder';
 import Signup from './src/screen/Signup';
+import SelectStore from './src/screen/SelectStore';
 import React from 'react';
 
 const MainTheme = {
@@ -52,6 +53,7 @@ export default function App() {
           />
 
           <Stack.Screen name='StockOrder' component={StockOrder} />
+          <Stack.Screen name='SelectStore' component={SelectStore} />
         </Stack.Navigator>
       </NavigationContainer>
     </NativeBaseProvider>
