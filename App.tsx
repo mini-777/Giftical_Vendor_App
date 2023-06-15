@@ -10,6 +10,8 @@ import Receipt from './src/screen/Receipt';
 import StockOrder from './src/screen/StockOrder';
 import SelectStore from './src/screen/SelectStore'
 import React from 'react';
+import EnrollProduct from './src/screen/EnrollProduct';
+import ManageProduct from './src/screen/ManageProduct';
 
 const MainTheme = {
   ...DefaultTheme,
@@ -48,6 +50,8 @@ export default function App() {
 
           <Stack.Screen name='StockOrder' component={StockOrder} />
           <Stack.Screen name='SelectStore' component={SelectStore} />
+          <Stack.Screen name='EnrollProduct' component={EnrollProduct} />
+          <Stack.Screen name='ManageProduct' component={ManageProduct} />
         </Stack.Navigator>
       </NavigationContainer>
     </NativeBaseProvider>

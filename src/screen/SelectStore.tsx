@@ -46,7 +46,13 @@ export default function SelectStore({ navigation }) {
   return (
     <Box margin={5}>
       <ScrollView>
-        <Text fontSize="sm" color="#C0C0C0">
+        <Text 
+          fontSize="sm" 
+          color='coolGray.600'
+          _dark={{
+            color: 'warmGray.200',
+          }}
+        >
           매장을 선택해주세요
         </Text>
         <VStack space={3} mt="5" divider={<Divider />}>
