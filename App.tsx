@@ -8,7 +8,8 @@ import Scan from './src/screen/Scan';
 import Login from './src/screen/Login';
 import Receipt from './src/screen/Receipt';
 import StockOrder from './src/screen/StockOrder';
-import SelectStore from './src/screen/SelectStore'
+import Signup from './src/screen/Signup';
+import SelectStore from './src/screen/SelectStore';
 import React from 'react';
 import EnrollProduct from './src/screen/EnrollProduct';
 import ManageProduct from './src/screen/ManageProduct';
@@ -34,6 +35,11 @@ export default function App() {
             options={{ headerShown: false }}
           />
 
+          <Stack.Screen
+            name='Signup'
+            component={Signup}
+            options={{ headerShown: false }}
+          />
           <Stack.Screen
             name='Main'
             component={Main}

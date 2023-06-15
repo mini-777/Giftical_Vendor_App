@@ -11,10 +11,31 @@ import {
   HStack,
   Center,
 } from 'native-base';
-
-const SignIn = (navigation) => {};
+import { useState } from 'react';
+import axios from 'axios';
 
 export default function Login({ navigation }) {
+  const [id, setId] = useState('');
+  const [password, setPassword] = useState('');
+
+  const logIn = () => {
+    axios
+      .post(
+        'http://ec2-54-180-89-26.ap-northeast-2.compute.amazonaws.com:8080/vendor/login',
+        {
+          businessUserId: id,
+          businessUserPw: password,
+        }
+      )
+      .then(function (response) {
+        // navigation.dispatch(StackActions.replace('Main', {}));
+        console.log(response.status);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  };
+
   return (
     <Center flex={1} px='3'>
       <Center w='100%'>
@@ -44,11 +65,11 @@ export default function Login({ navigation }) {
           <VStack space={3} mt='5'>
             <FormControl>
               <FormControl.Label>ID</FormControl.Label>
-              <Input />
+              <Input onChangeText={(e) => setId(e)} />
             </FormControl>
             <FormControl>
               <FormControl.Label>Password</FormControl.Label>
-              <Input type='password' />
+              <Input type='password' onChangeText={(e) => setPassword(e)} />
               <Link
                 _text={{
                   fontSize: 'xs',
@@ -78,6 +99,7 @@ export default function Login({ navigation }) {
               onPress={() => {
                 navigation.dispatch(StackActions.replace('SelectStore', {}));
               }}
+              //onPress={logIn}
             >
               로그인
             </Button>
@@ -89,7 +111,7 @@ export default function Login({ navigation }) {
                   color: 'warmGray.200',
                 }}
               >
-                새로운 사업자 인가요?{' '}
+                새로운 사용자 인가요?{' '}
               </Text>
               <Link
                 _text={{
@@ -97,7 +119,7 @@ export default function Login({ navigation }) {
                   fontWeight: 'medium',
                   fontSize: 'sm',
                 }}
-                href='#'
+                onPress={() => navigation.navigate('Signup')}
               >
                 회원가입
               </Link>

@@ -92,7 +92,7 @@ export default function EnrollProduct({ navigation }) {
             </HStack>
           </FormControl>
           <FormControl>
-            <FormControl.Label>태그?</FormControl.Label>
+            <FormControl.Label>태그</FormControl.Label>
             <Input onChangeText={(e) => setProductDetail(e)} />
           </FormControl>
 
