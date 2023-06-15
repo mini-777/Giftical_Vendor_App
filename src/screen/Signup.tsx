@@ -16,8 +16,10 @@ import {
   IconButton,
   CloseIcon,
   ZStack,
+  Image,
 } from 'native-base';
 import axios from 'axios';
+import * as ImagePicker from 'expo-image-picker';
 import { useState } from 'react';
 
 export default function Signup({ navigation }) {
@@ -27,10 +29,31 @@ export default function Signup({ navigation }) {
   const [bank, setBank] = useState('');
   const [bankAccount, setBankAccount] = useState('');
   const [businessNum, setBusinessNum] = useState('');
-
+  const [imageUrl, setImageUrl] = useState('');
+  const [status, requestPermission] = ImagePicker.useMediaLibraryPermissions();
   const [show, setShow] = useState(false);
   const [phone, setPhone] = useState('');
+  const uploadImage = async () => {
+    if (!status?.granted) {
+      const permission = await requestPermission();
+      if (!permission.granted) {
+        return null;
+      }
+    }
 
+    const result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      allowsEditing: false,
+      quality: 1,
+      aspect: [1, 1],
+    });
+    if (result.canceled) {
+      return null;
+    }
+
+    console.log(result.assets);
+    setImageUrl(result.assets[0].uri);
+  };
   const signUp = () => {
     axios
       .post(
@@ -58,7 +81,7 @@ export default function Signup({ navigation }) {
 
   return (
     <ZStack alignItems='center' flex={1}>
-      <Box mt={100} safeArea p='2' w='90%' maxW='290' py='8'>
+      <Box mt={0} safeArea p='2' w='90%' maxW='290' py='8'>
         <Heading
           size='lg'
           color='coolGray.800'
@@ -143,6 +166,32 @@ export default function Signup({ navigation }) {
               </Select>
 
               <Input flex='1' onChangeText={(e) => setBankAccount(e)} />
+            </HStack>
+          </FormControl>
+          <FormControl>
+            <FormControl.Label>사진</FormControl.Label>
+            <HStack justifyContent='space-between'>
+              {imageUrl && (
+                <Image
+                  source={{
+                    uri: imageUrl,
+                  }}
+                  alt='productImg'
+                  size='xl'
+                  rounded='md'
+                />
+              )}
+              <Button
+                maxH='12'
+                margin='2'
+                colorScheme='indigo'
+                onPress={() => {
+                  uploadImage();
+                }}
+                alignSelf='flex-end'
+              >
+                업로드
+              </Button>
             </HStack>
           </FormControl>
           <Button mt='2' colorScheme='indigo' onPress={() => signUp()}>
