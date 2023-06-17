@@ -11,7 +11,7 @@ import {
 } from 'native-base';
 import { Ionicons } from '@expo/vector-icons';
 
-export default function Main({ navigation }) {
+export default function Main({ navigation, route }) {
   return (
     <Box safeArea>
       <Box ml={5} mb={2}>
@@ -64,7 +64,9 @@ export default function Main({ navigation }) {
         </Center>
         <HStack margin={4} space={8} justifyContent='center'>
           <Center>
-            <Pressable onPress={() => navigation.navigate('EnrollProduct')}>
+            <Pressable
+              onPress={() => navigation.navigate('EnrollProduct', route.params)}
+            >
               {({ isHovered, isPressed }) => {
                 return (
                   <Center

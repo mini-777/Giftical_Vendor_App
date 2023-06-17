@@ -13,6 +13,7 @@ import SelectStore from './src/screen/SelectStore';
 import React from 'react';
 import EnrollProduct from './src/screen/EnrollProduct';
 import ManageProduct from './src/screen/ManageProduct';
+import Complete from './src/screen/Complete';
 
 const MainTheme = {
   ...DefaultTheme,
@@ -43,6 +44,11 @@ export default function App() {
           <Stack.Screen
             name='Main'
             component={Main}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name='Complete'
+            component={Complete}
             options={{ headerShown: false }}
           />
 

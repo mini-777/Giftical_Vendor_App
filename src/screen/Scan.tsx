@@ -17,8 +17,9 @@ export default function Scan({ navigation }) {
 
   const handleBarCodeScanned = ({ type, data }) => {
     setScanned(true);
+    navigation.navigate('Complete');
+
     if (data == '0076950450479') {
-      navigation.navigate('Release');
     }
   };
 

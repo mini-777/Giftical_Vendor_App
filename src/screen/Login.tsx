@@ -21,19 +21,20 @@ export default function Login({ navigation }) {
   const logIn = () => {
     axios
       .post(
-        'http://ec2-54-180-89-26.ap-northeast-2.compute.amazonaws.com:8080/vendor/login',
+        'http://ec2-54-180-2-24.ap-northeast-2.compute.amazonaws.com:8080/vendor/login',
         {
           businessUserId: id,
           businessUserPw: password,
         }
       )
       .then(function (response) {
-        // navigation.dispatch(StackActions.replace('Main', {}));
-        console.log(response.status);
+        navigation.dispatch(StackActions.replace('SelectStore', response.data));
+        console.log(response.data);
       })
       .catch(function (error) {
         console.log(error);
       });
+    navigation.dispatch(StackActions.replace('Main'));
   };
 
   return (
@@ -97,9 +98,8 @@ export default function Login({ navigation }) {
               mt='2'
               colorScheme='indigo'
               onPress={() => {
-                navigation.dispatch(StackActions.replace('SelectStore', {}));
+                logIn();
               }}
-              //onPress={logIn}
             >
               로그인
             </Button>

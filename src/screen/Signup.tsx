@@ -33,6 +33,7 @@ export default function Signup({ navigation }) {
   const [status, requestPermission] = ImagePicker.useMediaLibraryPermissions();
   const [show, setShow] = useState(false);
   const [phone, setPhone] = useState('');
+  const [imageBase, setImageBase] = useState('');
   const uploadImage = async () => {
     if (!status?.granted) {
       const permission = await requestPermission();
@@ -46,6 +47,7 @@ export default function Signup({ navigation }) {
       allowsEditing: false,
       quality: 1,
       aspect: [1, 1],
+      base64: true,
     });
     if (result.canceled) {
       return null;
@@ -53,17 +55,19 @@ export default function Signup({ navigation }) {
 
     console.log(result.assets);
     setImageUrl(result.assets[0].uri);
+    setImageBase(result.assets[0].base64);
   };
   const signUp = () => {
     axios
       .post(
-        'http://ec2-54-180-89-26.ap-northeast-2.compute.amazonaws.com:8080/vendor/join',
+        'http://ec2-54-180-2-24.ap-northeast-2.compute.amazonaws.com:8080/vendor/join',
         {
           businessUserId: id,
           businessUserPw: password,
           businessBankCode: bank,
           businessBankAccount: bankAccount,
           businessStoreNo: businessNum,
+          storeImg: imageBase,
         }
       )
       .then(function (response) {
@@ -75,6 +79,7 @@ export default function Signup({ navigation }) {
         console.log(response.status);
       })
       .catch(function (error) {
+        console.log(error);
         setShow(true);
       });
   };

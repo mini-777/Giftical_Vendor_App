@@ -1,13 +1,28 @@
-import { Box, Center, Heading, VStack, FormControl, Input, Button, TextArea, Image, HStack } from "native-base";
+import {
+  Box,
+  Center,
+  Heading,
+  VStack,
+  FormControl,
+  Input,
+  Button,
+  TextArea,
+  Image,
+  HStack,
+} from 'native-base';
 import * as ImagePicker from 'expo-image-picker';
-import { useState } from "react";
+import { useState } from 'react';
+import axios from 'axios';
+import { StackActions } from '@react-navigation/native';
 
-export default function EnrollProduct({ navigation }) {
+export default function EnrollProduct({ navigation, route }) {
   const [productName, setProductName] = useState('');
   const [productPrice, setProductPrice] = useState('');
   const [productDetail, setProductDetail] = useState('');
   const [productExplain, setProductExplain] = useState('');
   const [imageUrl, setImageUrl] = useState('');
+  const [imageBase, setImageBase] = useState('');
+
   const [status, requestPermission] = ImagePicker.useMediaLibraryPermissions();
   const uploadImage = async () => {
     if (!status?.granted) {
@@ -22,7 +37,7 @@ export default function EnrollProduct({ navigation }) {
       allowsEditing: false,
       quality: 1,
       aspect: [1, 1],
-      base64: true
+      base64: true,
     });
     if (result.canceled) {
       return null;
@@ -30,11 +45,30 @@ export default function EnrollProduct({ navigation }) {
 
     // console.log(result.assets)
     setImageUrl(result.assets[0].uri);
-  }
+    setImageBase(result.assets[0].base64);
+  };
 
   const enroll = () => {
-    // axios...
-  }
+    console.log(route.params);
+    axios
+      .post(
+        'http://ec2-54-180-2-24.ap-northeast-2.compute.amazonaws.com:8080/vendor/store/product/add',
+        {
+          storeId: route.params.id,
+          productName: productName,
+          productPrice: productPrice,
+          productImg: imageBase,
+        }
+      )
+      .then(function (response) {
+        navigation.navigate('Main', route.params);
+
+        console.log(response.data);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  };
 
   return (
     <Center w='100%' flex={1} px='3'>
@@ -63,30 +97,33 @@ export default function EnrollProduct({ navigation }) {
         <VStack space={3} mt='5'>
           <FormControl>
             <FormControl.Label>상품명</FormControl.Label>
-            <Input onChangeText={(e) => setProductName(e)} size="md"/>
+            <Input onChangeText={(e) => setProductName(e)} size='md' />
           </FormControl>
           <FormControl>
             <FormControl.Label>가격</FormControl.Label>
-            <Input onChangeText={(e) => setProductPrice(e)} size="md"/>
+            <Input onChangeText={(e) => setProductPrice(e)} size='md' />
           </FormControl>
           <FormControl>
             <FormControl.Label>사진</FormControl.Label>
-            <HStack justifyContent="space-between">
-              { (imageUrl) && <Image 
+            <HStack justifyContent='space-between'>
+              {imageUrl && (
+                <Image
                   source={{
-                    uri: imageUrl
+                    uri: imageUrl,
                   }}
-                  alt="productImg"
-                  size="xl"
-                  rounded="md"
-                /> 
-              }
-              <Button 
-                maxH='12' 
-                margin='2' 
-                colorScheme='indigo' 
-                onPress={()=>{uploadImage()}}
-                alignSelf="flex-end"
+                  alt='productImg'
+                  size='xl'
+                  rounded='md'
+                />
+              )}
+              <Button
+                maxH='12'
+                margin='2'
+                colorScheme='indigo'
+                onPress={() => {
+                  uploadImage();
+                }}
+                alignSelf='flex-end'
               >
                 업로드
               </Button>
@@ -99,13 +136,17 @@ export default function EnrollProduct({ navigation }) {
 
           <FormControl>
             <FormControl.Label>설명</FormControl.Label>
-            <TextArea 
+            <TextArea
               autoCompleteType={true}
-              numberOfLines={4} 
-              onChangeText={(e) => setProductExplain(e)} 
+              numberOfLines={4}
+              onChangeText={(e) => setProductExplain(e)}
             />
           </FormControl>
-          <Button mt='2' colorScheme='indigo' onPress={() => enroll()}>
+          <Button
+            mt='2'
+            colorScheme='indigo'
+            onPress={() => navigation.navigate('Complete')}
+          >
             등록
           </Button>
         </VStack>
